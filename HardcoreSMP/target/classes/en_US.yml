@@ -1,0 +1,51 @@
+ADDONS:
+  CLAIM_WALL:
+    CANT_ENTER_PVP_PROTECTION: "&cYou can't enter &c&l%HOUSE%&c under &9&lPvP Protection&c."
+  COMBAT_LOGGER:
+    CANT_HURT_PLAYER: "&eYou cannot hurt &a%PLAYER%&e."
+  DEATH_LOOKUP:
+    MENU:
+      NO_MORE_PAGES: "&cThere are no more pages."
+      ON_FIRST_PAGE: "&cYou're on the first page."
+      VIEWING_LASTEST_DEATH: "&cYou're viewing the latest death."
+BANNERS:
+
+COMMANDS:
+  ADDONS:
+    DEATH_LOOKUP:
+      USAGE: "&cUsage: /deathlookup <player>"
+      NO_PLAYER_FOUND: "&cNo player with name '%TARGET%' found."
+    CLONE_INVENTORY:
+      USAGE: "&cUsage: /cloneinventory <player>"
+      NO_PLAYER_FOUND: "&cNo player with name '%TARGET%' found."
+      INVENTORY_CLONED: "&aInventory successfully cloned"
+    GIVE_INVENTORY:
+      USAGE: "&cUsage: /giveinventory <player>"
+      NO_PLAYER_FOUND: "&cNo player with name '%TARGET%' found."
+      INVENTORY_GIVEN: "&aInventory successfully given"
+    LAST_INVENTORY:
+      USAGE: "&cUsage: /lastinventory <player>"
+      NO_PLAYER_FOUND: "&cNo player with name '%TARGET%' found."
+      INVENTORY_RECEIVED: "&aInventory successfully received"
+      NO_LAST_INVENTORY: "&f%PLAYER% &ahas no previous inventories to restore."
+      ERROR_GETTING_INVENTORY: "&cAn error occurred when attempting to grab that inventory."
+      INVALID_QUERY: "&cInvalid query."
+  HOUSE:
+    ALLY: 
+      USAGE: "&cUsage: &b/h ally &3<house>"
+      NO_HOUSES_FOUND: "&cNo houses found with player or name '%NAME%'."
+      CANT_ALLY_SELF: "&cYou cannot ally your own house!"
+      ALREADY_HAVE_RELATIONSHIP: "&cYour house already has this relationship with %HOUSE%."
+      ALLY_ALREADY_REQUESTED: "&cYour house has already requested to ally %HOUSE%."
+      REQUEST_HOUSE_WAR_DECLARED: "&cThe house you specified already has war declared against you!"
+      YOU_HAVE_WAR_DECLARED: "&cYou have already declared war on this house. Use /h neutral to remove your war declaration."
+      MAXIMUM_ALLIES_REACHED: "&cHouse '%HOUSE%' has reached the maximum ally limit!"
+      SUCCESSFULLY_ALLIED: "&eYour house is now &dallied&e with &9%HOUSE%&e."
+      PLAYER_REQUESTED_ALLY: "&ePlayer &a%PLAYER%&e has requested to ally &d%HOUSE%&e."
+      RECEIVED_REQUEST_LORD: "&eHouse &d%HOUSE%&e has sent you an ally request! Use /h ally %HOUSE%"
+      RECEIVED_REQUEST_MEMBER: "&eHouse &d%HOUSE%&e has sent you an ally request!"
+    ANNOUNCEMENT: 
+      USAGE: "&cUsage: &b/h announcement &3<message>"
+      PLAYER_CHANGED_ANNOUNCEMENT: "&d%PLAYER%&e changed the house announcement to '&d%MESSAGE%&e'"
+      
+LISTENERS:

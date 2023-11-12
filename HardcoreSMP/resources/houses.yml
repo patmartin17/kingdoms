@@ -1,0 +1,53 @@
+HOUSE:
+  HOUSE_NAME:
+    MAX_CHARACTERS: 16
+    MIN_CHARACTERS: 3
+    BLOCKED_NAMES:
+    - "riven"
+  HOUSE_CHAT:
+    ENABLED: TRUE
+    NO_HOUSE: ""
+    FRIENDLY: "&6[&2%TAG%&6]&r"
+    ALLY: "&6[&d%TAG%&6]&r"
+    ENEMY: "&6[&e%TAG%&6]&r"
+  TAB_LIST:
+    ENABLED: TRUE
+    FRIENDLY_COLOR: "DARK_GREEN"
+    ALLY_COLOR: "LIGHT_PURPLE"
+    ENEMY_COLOR: "YELLOW"
+  ALLIES:
+    DAMAGE_FRIENDLY: TRUE
+HOUSE_SHOW:
+  SETTINGS:
+    CAPITAL_PLACEHOLDER: "None" #if home not set
+    OFFLINE_COLOR: "GRAY"
+    ONLINE_COLOR: "GREEN"
+    SPLIT_NAMES:
+      ENABLED: TRUE
+      FORMAT: "&7, "
+    LIVES_SYMBOL:
+      POWER: "❤"
+      POWERLESS: "✘"
+    LIVES_COLOR:
+      POWER: "GREEN"
+      POWERLESS: "DARK_RED"
+  MESSAGE:
+    - "&7&m                                                                      "
+    - "&9%HOUSE% &7[%ONLINE_COUNT%/%MAX_COUNT%] &7- &eCapital:&f %CAPITAL% &7- %BANNER%"
+    - "&eLord: %LORD%"
+    - "&eCaptains: %CAPTAINS%"
+    - "&eMembers: %MEMBERS%"
+    - "&eEnemies: &d%ENEMIES%"
+    - "&eAllies: &d%ALLIES%"
+    - "&eBalance: &6%BALANCE%g"
+    - "&eLives: &a%LIVES%%LIVES_SYMBOL%"
+    - "&eAnnouncement: &d%ANNOUNCEMENT%"
+    - "&7&m                                                                      "
+
+HOUSE_LIST:
+  - "&7&m                                                                      "
+  - "&9House List &7(Page %PAGE%/%TOTAL_PAGES%)"
+  - "&7%POSITION%. &e%HOUSE% &a(%ONLINE_COUNT%/%MAX_COUNT%)"
+  - "&7You are currently on &fPage %PAGE%/%TOTAL_PAGES%&7."
+  - "&7To view other pages use &e/f list <page#>"
+  - "&7&m                                                                      "

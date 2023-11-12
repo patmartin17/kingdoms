@@ -1,0 +1,64 @@
+- people can claim spawn and koths if we have them(world guard flag for eventhandlers)
+- Defense of the throne once a week and the royal house gets some slight buffs in their territory.
+- 8 netherrite make a shard of undying. Those make "fallen god" armor (first custom craftable item)
+- //long castle banners that have an effect to house members. 
+- //hardcore hearts may be affecting /heal and healing pots
+- //error on log out for admin inventory
+- //in HouseDisbandCommand.java we need to readd the mongo removal for disbanned
+- tab names
+- cant enemy no enemies /h enemy and /h ally need to check for eachtohers current relations
+- cant claim within 1000 blocks. say its owned by royal house
+
+
+QUESTIONS: 
+- why are we saving deaths in profiles
+
+
+TODO:
+- context of houses and custom items with (tutorial) from the prisons
+- //make house banners (planned)
+- #make houses fully operational
+- #make the lives system
+- #make the throne and koth function
+- #finish slots
+- #classes for fighting:
+	- #banner ideas: choose a first banner and second banner and you can buy a special banner that allows you to place and remove the entire banner at once
+	provided there is space below.
+	- #wear banners for a team boost like bard.
+	
+- #LiveAtlas
+- #create the custom item crafting idea (meals, custom armor, condensed star ore)
+- #finish the minigame
+- #thats pretty much it for the beginning of the server
+- #then load the map 20kx20k
+- #make the website
+- #create the voice over lines and create the youtube shorts with 4 youtube accuonts, all different names and post each with different tags.
+- #release the server shortly after and begin to collect marketing data and working on player domains and references, voting, newsletter, email list, forum, etc.
+(MARKETING IDEAS/ADVERTISING IDEAS)
+- #finish admin mode and recruit some small amount of staff over time
+- #then continue to push out new ideas on a weekly basis. If ever I am way too busy to release anything, just release a new craftable item each week.
+(If i do have time, work on instancehousing (spawn houses), long form and clever quests with an easy system to allow others to make their own quests. 
+#How does bdo have so many quests [they have a team to make quests], bounties/faceless man idea, tutorial/intro, expand on raidable/powerless idea, 
+class selector and classes, more custom blocks/ores/locations to mine custom blocks/ores)
+- #if there are no players, then we pay a youtuber to get the word out. But the marketing idea should work. Start making your own how to play videos.
+- #How to play HardcoreSMP?
+
+BUYCRAFT ITEMS:
+
+
+CUSTOM ITEMS:
+- compressed star armor: cant take fire damage, can breath under water, and 1.5x netherite armor protection. Bounce on lava? Also walk on water with lilypads
+- compressed star ore: spawns randomly 1/50 when mining diamond ores. It replaces the surrounding ores with compressed star ore. 1/100 when mining gold 1/250 iron.
+
+
+
+FUTURE IDEAS:
+- #Add a red woman/priestess type thing. Can affect battles with witchcraft. Make a voodoo doll out of an enemy player through fire and it can be clicked once.
+- #City soundscape when you are near spawn. Some kind of livliness in spawn.
+- #Builder mode (multiple saved inventories, etc. )
+- #Future: leader of royal house can ride a dragon around the world. It cant do damage.
+- #Future idea to flesh out: When you die, you have a chance to drop some of your items. It lists them in chat.
+- #Future idea: bard will be able to combine soul of player that is a ghast tear with a totem to make a voodoo doll
+	
+ONGOING SERRVER:
+- #minigames

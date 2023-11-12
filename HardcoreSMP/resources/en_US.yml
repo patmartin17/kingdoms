@@ -1,0 +1,224 @@
+ADDONS:
+  CLAIM_WALL:
+    CANT_ENTER_PVP_PROTECTION: "&cYou can't enter &c&l%HOUSE%&c under &9&lPvP Protection&c."
+  COMBAT_LOGGER:
+    CANT_HURT_PLAYER: "&eYou cannot hurt &a%PLAYER%&e."
+  DEATH_LOOKUP:
+    MENU:
+      NO_MORE_PAGES: "&cThere are no more pages."
+      ON_FIRST_PAGE: "&cYou're on the first page."
+      VIEWING_LASTEST_DEATH: "&cYou're viewing the latest death."'
+      
+BANNERS:
+  NO_BANNER_SET: "&cYour house does not have a banner set."
+  ONLY_PLACE_HOUSE_BANNER: "&cYou can only place your house banner."
+  MUST_BE_IN_HOUSE: "&cYou must belong to a house to place a wall banner."
+  MUST_BE_LORD_OR_CAPTAIN: "&cYou must be a lord or a captain to set the house banner."
+  MUST_PLACE_IN_CLAIM: "&cYou must place the banner inside your own claim."
+  MUST_PLACE_ABOVE_GROUND: "&cYou must place the banner &e%BLOCKS% blocks above the ground with no interference below."
+  MUST_PLACE_ABOVE_DEFAULT: "&cYou must place the banner &e7 blocks above the ground with no interference below."
+  CANT_BREAK_OTHER_BANNERS: "&cYou can't break other house banners"
+  REMOVED_HOUSE_BANNER: "&aYou have removed a team banner"
+  CANNOT_BREAK_CONNECTED_BLOCKS: "&cYou cannot break a block that is connected to a house banner."
+  CREATION:
+    MUST_HAVE_LEAST_BANNER: "&cYou must have at least one banner set. Changes were not saved."
+    MUST_HAVE_A_BANNER: "&cYou must have a banner set. Changes were not saved."
+    PLAYER_HAS_UPDATED_BANNER: "&a%PLAYER% &fhas updated the house banner."
+
+COMMANDS:
+  COMMON: 
+    NO_PLAYER_FOUND: "&cNo player with name '%TARGET%' found."
+    MUST_BE_PLAYER: "&7You must be a player to execute this command."
+  ADDONS:
+    DEATH_LOOKUP:
+      USAGE: "&cUsage: /deathlookup <player>"
+    CLONE_INVENTORY:
+      USAGE: "&cUsage: /cloneinventory <player>"
+      INVENTORY_CLONED: "&aInventory successfully cloned"
+    GIVE_INVENTORY:
+      USAGE: "&cUsage: /giveinventory <player>"
+      INVENTORY_GIVEN: "&aInventory successfully given"
+    LAST_INVENTORY:
+      USAGE: "&cUsage: /lastinventory <player>"
+      INVENTORY_RECEIVED: "&aInventory successfully received"
+      NO_LAST_INVENTORY: "&f%PLAYER% &ahas no previous inventories to restore."
+      ERROR_GETTING_INVENTORY: "&cAn error occurred when attempting to grab that inventory."
+      INVALID_QUERY: "&cInvalid query."
+  HOUSE:
+    COMMON:
+      NO_HOUSES_FOUND: "&cNo houses found with player or name '%NAME%'."
+      MUST_BE_IN_HOUSE: "&cYou must be in a house to use this chat mode!"
+      ALREADY_HAVE_RELATIONSHIP: "&cYour house already has this relationship with %HOUSE%. (%RELATION%)"
+      MUST_BE_LORD_OR_CAPTAIN: "&cYou must be the lord or a captain to set the house banner."
+      NOT_IN_HOUSE: "&7You're not in a house!"
+      PLAYER_NEVER_JOINED: "&cPlayer '%PLAYER%' has never joined the server!"
+      MUST_BE_PLAYER: "&7You must be a player to execute this command."
+      MUST_BE_LORD: "&cYou must be the lord of the house to do this!"
+      PLAYER_NOT_IN_HOUSE: "&3%PLAYER% is not in your house!"
+    ALLY: 
+      USAGE: "&cUsage: &b/h ally &3<house>"
+      CANT_ALLY_SELF: "&cYou cannot ally your own house!"
+      ALLY_ALREADY_REQUESTED: "&cYour house has already requested to ally %HOUSE%."
+      REQUEST_HOUSE_WAR_DECLARED: "&cThe house you specified already has war declared against you!"
+      YOU_HAVE_WAR_DECLARED: "&cYou have already declared war on this house. Use /h neutral to remove your war declaration."
+      MAXIMUM_ALLIES_REACHED: "&cHouse '%HOUSE%' has reached the maximum ally limit!"
+      SUCCESSFULLY_ALLIED: "&eYour house is now &dallied&e with &9%HOUSE%&e."
+      PLAYER_REQUESTED_ALLY: "&ePlayer &a%PLAYER%&e has requested to ally &d%HOUSE%&e."
+      RECEIVED_REQUEST_LORD: "&eHouse &d%HOUSE%&e has sent you an ally request! Use /h ally %HOUSE%"
+      RECEIVED_REQUEST_MEMBER: "&eHouse &d%HOUSE%&e has sent you an ally request!"
+    ANNOUNCEMENT: 
+      USAGE: "&cUsage: &b/h announcement &3<message>"
+      PLAYER_CHANGED_ANNOUNCEMENT: "&d%PLAYER%&e changed the house announcement to '&d%MESSAGE%&e'"
+    BANNER:
+      USAGE: "&cUsage: /h banner"
+      NO_ACCESS: "&cYou must belong to a house to access the banner menu."
+    CLAIM:
+      RECEIVED_CLAIMING_WAND: "&7You have received a claiming wand."
+    ENEMY:
+      USAGE: "&cUsage: /h enemy <house>"
+      CANT_ENEMY_SELF: "&cYou cannot enemy your own house!"
+      EXCEEDED_MAX_WARS: "&cYou can not have more than three wars declared at once."
+      ALREADY_HAVE_WAR_DECLARED: "&cYou already have a war declaration against house %HOUSE%."
+      MUST_BE_NEUTRAL: "&7(You must neutral this house before declaring war)"
+      YOU_DECLARED_WAR: "&c&lYour house has declared war on house &e&l%HOUSE%!"
+      HOUSE_ENEMIED_YOU: "&c&lHouse &e&l%HOUSE% &c&lhas declared war on your house!"
+    INVITE: 
+      USAGE: "&cUsage: /h invite <player>"
+      CANT_INVITE_SELF: "&cYou can't invite yourself!"
+      PLAYER_ALREADY_IN_HOUSE: "&c%PLAYER% is already in your house!"
+      PLAYER_ALREADY_INVITED: "&c%PLAYER% has already been invited!"
+      YOU_HAVE_BEEN_INVITED: "&eYou&e have been invited to join &9%HOUSE%&e. &7(Type /h join %HOUSE% to join)"
+      PLAYER_HAS_INVITED: "&ePlayer &a%PLAYER%&e has invited &9%INVITED_PLAYER%&e to your house"
+    KICK:
+      USAGE: "&cUsage: /h kick <player>"
+      CANT_KICK_SELF: "&cYou can't kick yourself!"
+      PLAYER_NOT_IN_HOUSE: "&3%PLAYER% is not in your house!"
+      CANT_KICK_LORD: "&cYou can't kick the lord!"
+      CANT_KICK_CAPTAIN: "&cYou can't kick another captain!"
+      PLAYER_HAS_KICKED: "&ePlayer &a%PLAYER%&e has kicked &9%KICKED_PLAYER%&e from the house"
+    NEUTRAL: 
+      USAGE: "&cUsage: /h neutral <house>"
+      CANT_ENEMY_SELF: "&cYou cannot enemy your own house!"
+      NO_RELATIONSHIP: "&cYou do not have a relationship with this house."
+      REMOVED_WAR_DECLARATION: "&7You have removed your war declaration on house &e%HOUSE%."
+      HOUSE_HAS_REMOVED_WAR_DECLARATION: "&7House &e%HOUSE% &7has removed their war declaration."
+      ENDED_ALLIANCE: "&7You have ended your alliance with house &e%HOUSE%."
+      HOUSE_HAS_ENDED_ALLIANCE: "&7House &e%HOUSE% &7has ended their alliance with your house."
+    RENAME:
+      USAGE: "&cUsage: /h tag <new house name>"
+      MINIMUM_SIZE: "&cMinimum house name size is 3 characters!"
+      MAXIMUM_SIZE: "&cMaximum house name size is 16 characters!"
+      ALPHANUMERIC: "&cHouse tag must be alphanumeric!"
+      BLACKLISTED: "&cThat house tag is blacklisted!"
+      ALREADY_EXISTS: "&7That house already exists!"
+      HOUSE_HAS_RENAMED: "&eHouse &9%OLD_NAME%&e has been &arenamed&e to &9%NEW_NAME%&e by &f%PLAYER%"
+    SETHOME:
+      PLAYER_UPDATED_HOME: "&3%PLAYER% has updated the kingdom capital location"
+      MUST_BE_OWNED_LAND: "&cYour kingdom capital can only be set in your own land!"
+    UNCLAIM:
+      USAGE: "&cUsage: /h unclaim (<all>)"
+      NO_CLAIMED_LAND: "&cYour house does not have any land!"
+      PLAYER_UNCLAIMED_ALL_LAND: "&ePlayer &a%PLAYER%&e has unclaimed all your land!"
+      PLAYER_UNCLAIMED_LAND: "&ePlayer &a%PLAYER%&e has unclaimed land!"
+      MUST_BE_IN_LAND: "&cYou must be in our own land to unclaim!"
+    UNINVITE:
+      USAGE: "&cUsage: /h uninvite <player>"
+      NO_PENDING_INVITES: "&cNo pending invite for '%PLAYER%'"
+      PLAYER_CANCELLED_INVITE: "&ePlayer &a%PLAYER%&e has cancelled &d%UNINVITED_PLAYER%&e's invititation to the house"
+    WITHDRAW:
+      PLAYER_WITHDREW: "&ePlayer &a%PLAYER%&e has withdrawn &6%AMOUNT%g&e from the house balance!"
+      INVALID_NUMBER: "&c'%STRING%' is not a valid number!"
+      HOUSE_INSUFFICIENT_FUNDS: "&cYour house does not have enough money to do this!"
+      CANT_WITHDRAW_ZERO: "&cYou cannot withdraw 0g (or less)!"
+    DEMOTE:
+      USAGE: "&cUsage: /h demote <player>"
+      CANT_DEMOTE_SELF: "&cYou cannot demote yourself!"
+      PLAYER_NOT_CAPTAIN: "&c%PLAYER% is not an captain!"
+      PLAYER_DEMOTED: "&ePlayer &a%PLAYER%&e has been demoted to a member by &f%LORD%"
+    DISBAND:
+      HOUSE_DISBANDED: "&eHouse &9%NAME%&e has been &cdisbanded&e by &f%PLAYER%"
+    LORD:
+      USAGE: "&cUsage: /h lord <player>"
+      ALREADY_LORD: "&cYou're already the lord!"
+      PLAYER_IS_LORD: "&c%PLAYER% is already lord of the house!"
+      PLAYER_BEEN_MADE_LORD: "&ePlayer &a%PLAYER%&e has been made lord by &f%LORD%"
+    PROMOTE:
+      USAGE: "&cUsage: /h promote <player>"
+      CANT_PROMOTE_SELF: "&cYou cannot promote yourself!"
+      ALREADY_CAPTAIN: "&c%PLAYER% is already an captain!"
+      PLAYER_PROMOTED: "&ePlayer &a%PLAYER%&e has been promoted to an captain by &f%LORD%"
+    CHAT:
+      PUBLIC_CHAT: "&fYou are now in public chat."
+      HOUSE_CHAT: "&2You are now in house chat."
+      ALLIANCE_CHAT: "&9You are now in alliance chat."
+      HOUSE_MESSAGE: "&2(House) %PLAYER%:&e %MESSAGE%"
+      ALLIANCE_MESSAGE: "&9(Ally) %PLAYER%:&e %MESSAGE%"
+    CREATE:
+      USAGE: "&cUsage: /h create <house name>"
+      ALREADY_IN_HOUSE: "&cYou're already in a house!"
+      TOO_SHORT: "&7The name of your house is too short (< 3 characters)."
+      TOO_LONG: "&7The name of your house is too long (> 16 characters)."
+      LETTERS_AND_NUMBERS: "&7The name of your house can only contain letters and numbers."
+      BLACKLISTED_NAME: "&cThat house tag is blacklisted!"
+      HOUSE_ALREADY_EXISTS: "&7That house already exists!"
+      NOT_ENOUGH_LIVES: "&cYou do not have enough lives to start a house."
+      DEDUCTED_LIVES: "&aYou have been deducted one life to establish your house."
+      HOUSE_CREATED: "&eHouse &9%NAME%&e has been &acreated&e by &f%PLAYER%"
+    DEPOSIT:
+      USAGE: "&cUsage: /h deposit <amount/all>"
+      MUST_HAVE_HOUSE: "&cYou must have a house to deposit money."
+      NOT_NUMBER: "&c'%STRING%' is not a valid number!"
+      NOT_ENOUGH_MONEY: "&cYou do not have enough money to do this!"
+      CANT_DEPOSIT_ZERO: "&cYou cannot deposit 0g (or less)!"
+      PLAYER_DEPOSITED: "&ePlayer &a%PLAYER%&e has deposited &6%AMOUNT%g&e into the house balance!"
+    HOME:
+      NO_HOUSE_FOUND: "&cNo online or offline house found with player or name '%NAME%'."
+      CAPITAL_NOT_SET: "&cKingdom capital not set!"
+      TELEPORTING: "&eYou will be teleported to your house home in %TIME%..."
+    INVITES:
+      YOUR_INVITES: "&eYour invites: &7%INVITES%"
+      HOUSE_INVITES: "&eInvited to your team: &7%INVITES%"
+    JOIN:
+      USAGE: "&cUsage: /h join <player/house>"
+      ALREADY_IN_HOUSE: "&cYou're already in a house!"
+      NOT_INVITED: "&cThat house hasn't invited you."
+      HOUSE_REACHED_MAX: "&House '%HOUSE%' has reach the maximum player limit!"
+      YOU_JOINED: "&eYou joined &9%HOUSE%&e."
+      PLAYER_JOINED_HOUSE: "&ePlayer &a%PLAYER%&e has joined your house."
+    LEAVE:
+      CANNOT_LEAVE_AS_LORD: "&cYou cannot leave as lord!"
+      YOU_LEFT: "&eYou left &9%HOUSE%&e."
+      PLAYER_LEFT_HOUSE: "&ePlayer &a%PLAYER%&e has left your house"
+    LIST:
+      NO_HOUSES: "&cThere are currently no houses to list!"
+    LIVES:
+      MUST_BE_MEMBER: "&cYou must be a member of a house to deposit lives."
+      HOUSE_IS_REGENERATING: "&cYou cannot deposit lives while your house is regenerating."
+      SUCCESSFULLY_DEPOSITED: "&aYou have successfully deposited &f%AMOUNT% &alives into your house life balance."
+      NOT_ENOUGH_LIVES: "&cYou do not have enough general lives to do this."
+    MAP:
+      MAP_PILLARS_HIDDEN: "&eMap pillars hidden..."
+      NO_NEARBY_CLAIMS: "&cThere are no nearby claims to display!"
+      DISPLAYING_HOUSE: "&eDisplaying &a%HOUSE%&e with &b%BLOCK%&e."
+    MESSAGE: 
+      USAGE: "&cUsage: /h msg <message>"
+      MUST_BELONG_TO_HOUSE: "&cYou must belong to a house to use this chat mode!"
+      HOUSE_MESSAGE: "&2(House) %PLAYER%:&e %MESSAGE%"
+  PROTECTION:
+    USAGE: "&cUsage: /pvp <enable/time>"
+    ENABLE:
+      USAGE: "&cUsage: /pvp enable"
+      NO_PLAYER_FOUND: "No player with name '%INPUT%' found."
+      NO_PROTECTION: "&cYou do not have PvP Protection."
+      PLAYER_NO_PROTECTION: "&c%PLAYER% does not have PvP Protection."
+      ENABLED_PVP: "&cYou have enabled PvP."
+      ENABLED_PVP_FOR_PLAYER: "&cYou have enabled PvP for %PLAYER%."
+    TIME:
+      USAGE: "&cUsage: /pvp time"
+      CURRENT_TIME: "&cYou currently have &lPvP Protection&c for %TIME% minutes."
+      PLAYER_CURRENT_TIME: "&c%PLAYER% currently has &lPvP Protection&c for %TIME% minutes."
+      
+LISTENERS:
+  PROTECTION:
+    NO_ACTION_PROTECTED: "&cYou can't do this whilst under PvP Protection."
+    PLAYER_HAS_PROTECTION: "&c&l%PLAYER%&c has &lPvP Protection&c!"

@@ -1,0 +1,18 @@
+MESSAGE_INTERVAL: 2400
+CURRENT_INDEX: 0
+MESSAGES:  
+  WRAPPER: "&7&m                                                                      "
+  MESSAGE_LIST:
+    0:
+      WRAPPERS: true
+      LIST:
+      - "&7Join our &9Discord server &7and verify your account"
+      - "&7for a &e(INSERT PRIZE) &7and a &esoulbound life!"
+    1:
+      WRAPPERS: true
+      LIST:
+      - "TEST THIS SHIT"
+    2:
+      WRAPPERS: true
+      LIST:
+      - "TEST THIS SHIT2"

@@ -1,0 +1,14 @@
+# when you die, it takes soulbound -> general -> house lives in that order
+# you need 1 life to start a house and 1 life to join a house
+# houses cannot withdraw lives but they can deposit lives /h lives <deposit_amount> and set powerless false if above zero
+- when regenning setpowerless false if above 0
+- when a house goes negative it regens to 5.0 after an hour of being 0.0 or below
+- need a lives command for personal lives as well as lives give which you can only give general lives
+# also need lives give/set/take for admin
+- lives can be obtained through voting, random chance while mining, (later on fishing, cooking, alchemy, random chance through everything), and trading in a nether star
+# you start with 2 soulbound and 1 general
+- lives shop will be in the house menu. House menu right now has banners, lives shop, gold shop. (Later will have daily rewards)
+- you can spend down to 0.01. If remaining life balance is less than that you cannot. Will need a transactionsuccess thing for lives.
+- /h enemy/war <house> costs 10 lives
+- /h hostile costs 100 lives.
+- the amount of lives a house regens to is based on the amount of players

@@ -1,0 +1,12 @@
+TITLE: "&9&lRiven &f| &7&lKingdoms   "
+LINES:
+  - "&7&m                                 "
+  #- "&4&lSpawn Tag:&c %SPAWN_TAG%"
+  - "&e&lEnderpearl&7:&f %ENDER_PEARL%"
+  - "%CAPTURE_POINT%&7:&f "
+  - "&9&lProtection&7:&f %PVP_PROTECTION%"
+  - "&c&lCombat&7:&f %COMBAT_TAG%"
+  - "&7&m                                 "
+PLACE_HOLDER:
+  CAPTURE_POINT:
+   - "&9&l%CAPTURE_POINT%&c: %TIME%"
