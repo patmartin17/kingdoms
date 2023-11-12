@@ -1,2 +1,0 @@
-# kingdoms
-kingdoms minecraft
