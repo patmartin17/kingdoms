@@ -60,7 +60,7 @@
     </repository>
     <repository>
       <id>canvas</id>
-      <url>C:\Users\samue\.m2\repository\org\ipvp\canvas\1.7.0-SNAPSHOT\</url>
+      <url>file:///C:/Users/samue/.m2/repository/org/ipvp/canvas/1.7.0-SNAPSHOT/</url>
     </repository>
     <repository>
       <id>dmulloy2-repo</id>

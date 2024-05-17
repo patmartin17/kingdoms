@@ -11,19 +11,19 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 
 import com.rivensoftware.hardcoresmp.HardcoreSMP;
+import com.rivensoftware.hardcoresmp.economy.InternalEconomy;
 import com.rivensoftware.hardcoresmp.tools.MessageTool;
 
 import co.aikar.commands.BaseCommand;
 import co.aikar.commands.annotation.CommandAlias;
 import co.aikar.commands.annotation.Default;
 import co.aikar.commands.annotation.Syntax;
-import net.milkbowl.vault.economy.Economy;
 
 @CommandAlias("withdraw")
 public class WithdrawCommand extends BaseCommand
 {
 	private HardcoreSMP plugin = HardcoreSMP.getInstance();
-	private Economy economy = plugin.getEconomy();
+	private InternalEconomy economy = plugin.getInternalEconomy();
 
 	double goldNuggetValue = DepositCommand.GOLD_NUGGET_VALUE;
 	double goldIngotValue = DepositCommand.GOLD_INGOT_VALUE;
@@ -35,14 +35,14 @@ public class WithdrawCommand extends BaseCommand
 	{
 		Player player = (Player) sender;
 
-		if(this.economy.getBalance(player) >= amount)
+		if(this.economy.getBalance(player.getUniqueId()) >= amount)
 		{
 			int spacesNeeded = getWithdrawalItems(player, amount).size();
 			int totalSlots = availableSlots(player.getInventory());
 
 			if(totalSlots >= spacesNeeded)
 			{
-				this.economy.withdrawPlayer((OfflinePlayer)player, amount);
+				this.economy.removeBalance(((OfflinePlayer)player).getUniqueId(), amount);
 
 				for(ItemStack item : getWithdrawalItems(player, amount))
 				{
@@ -138,7 +138,7 @@ public class WithdrawCommand extends BaseCommand
 					items.add(goldNuggetItems);	
 				}
 
-				this.economy.depositPlayer((OfflinePlayer)player, (returnRemainder * 0.5));
+				this.economy.addBalance(((OfflinePlayer)player).getUniqueId(), (returnRemainder * 0.5));
 			}
 		}
 		else
@@ -154,7 +154,7 @@ public class WithdrawCommand extends BaseCommand
 				items.add(goldNuggetItems);
 			}
 
-			this.economy.depositPlayer((OfflinePlayer)player, (returnRemainder * 0.5));
+			this.economy.addBalance(((OfflinePlayer)player).getUniqueId(), (returnRemainder * 0.5));
 		}
 
 		return items;

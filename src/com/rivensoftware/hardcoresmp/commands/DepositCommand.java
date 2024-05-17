@@ -10,6 +10,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 
 import com.rivensoftware.hardcoresmp.HardcoreSMP;
+import com.rivensoftware.hardcoresmp.economy.InternalEconomy;
 import com.rivensoftware.hardcoresmp.tools.MessageTool;
 
 import co.aikar.commands.BaseCommand;
@@ -17,13 +18,12 @@ import co.aikar.commands.annotation.CommandAlias;
 import co.aikar.commands.annotation.Default;
 import co.aikar.commands.annotation.Subcommand;
 import lombok.Getter;
-import net.milkbowl.vault.economy.Economy;
 
 @CommandAlias("deposit")
 public class DepositCommand extends BaseCommand
 {
 	private HardcoreSMP plugin = HardcoreSMP.getInstance();
-	private Economy economy = plugin.getEconomy();
+	private InternalEconomy economy = plugin.getInternalEconomy();
 
 	@Getter public static final double GOLD_NUGGET_VALUE = 0.11;
 	@Getter public static final double GOLD_INGOT_VALUE = 1.0;
@@ -41,7 +41,7 @@ public class DepositCommand extends BaseCommand
 		{
 			double total = getHandGoldAmount(player.getInventory().getItemInMainHand());
 
-			this.economy.depositPlayer((OfflinePlayer)player, total);
+			this.economy.addBalance(((OfflinePlayer)player).getUniqueId(), total);
 
 			player.sendMessage(MessageTool.color("&7You have successfully deposited &6" + format.format(total) + "g &7to your balance."));
 
@@ -64,7 +64,7 @@ public class DepositCommand extends BaseCommand
 		{
 			double total = getAllGoldAmount(player.getInventory());
 
-			this.economy.depositPlayer((OfflinePlayer)player, total);
+			this.economy.addBalance(((OfflinePlayer)player).getUniqueId(), total);
 
 			player.sendMessage(MessageTool.color("&7You have successfully deposited &6" + format.format(total) + "g &7to your balance."));
 

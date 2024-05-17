@@ -70,7 +70,7 @@ public class HouseDisbandCommand extends HouseCommand
 		} 
 		
 		
-		plugin.getEconomy().depositPlayer((OfflinePlayer)player, house.getBalance());
+		plugin.getInternalEconomy().addBalance(((OfflinePlayer)player).getUniqueId(), house.getBalance());
 		Bukkit.getPluginManager().callEvent((Event)new PlayerDisbandHouseEvent(player, house));
 		Bukkit.broadcastMessage(MessageTool.color("&eHouse &9%NAME%&e has been &cdisbanded&e by &f%PLAYER%").replace("%PLAYER%", player.getName()).replace("%NAME%", house.getHouseName()));
 		House.getHouses().remove(house.getUuid());

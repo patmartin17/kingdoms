@@ -1,23 +1,25 @@
 package com.rivensoftware.hardcoresmp.house.commands.captain;
 
-import co.aikar.commands.annotation.CommandAlias;
-import co.aikar.commands.annotation.Subcommand;
-import com.rivensoftware.hardcoresmp.HardcoreSMP;
-import com.rivensoftware.hardcoresmp.house.House;
-import com.rivensoftware.hardcoresmp.house.commands.HouseCommand;
-import com.rivensoftware.hardcoresmp.profile.Profile;
-import com.rivensoftware.hardcoresmp.tools.MessageTool;
-import net.milkbowl.vault.economy.Economy;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import com.rivensoftware.hardcoresmp.HardcoreSMP;
+import com.rivensoftware.hardcoresmp.economy.InternalEconomy;
+import com.rivensoftware.hardcoresmp.house.House;
+import com.rivensoftware.hardcoresmp.house.commands.HouseCommand;
+import com.rivensoftware.hardcoresmp.profile.Profile;
+import com.rivensoftware.hardcoresmp.tools.MessageTool;
+
+import co.aikar.commands.annotation.CommandAlias;
+import co.aikar.commands.annotation.Subcommand;
+
 @CommandAlias("house|h")
 public class HouseWithdrawCommand extends HouseCommand
 {
 	private HardcoreSMP plugin = HardcoreSMP.getInstance();
-	private Economy economy = plugin.getEconomy();
+	private InternalEconomy economy = plugin.getInternalEconomy();
 	
 	@Subcommand("withdraw")
 	public void withdrawCommand(CommandSender sender, int amount) 
@@ -54,7 +56,7 @@ public class HouseWithdrawCommand extends HouseCommand
 			player.sendMessage(MessageTool.color("&cYou cannot withdraw 0g (or less)!"));
 			return;
 		} 
-		this.economy.depositPlayer((OfflinePlayer)player, amount);
+		this.economy.addBalance(((OfflinePlayer)player).getUniqueId(), amount);
 		house.setBalance(house.getBalance() - amount);
 		house.sendMessage(MessageTool.color("&ePlayer &a%PLAYER%&e has withdrawn &6%AMOUNT%g&e from the house balance!").replace("%PLAYER%", player.getName()).replace("%AMOUNT%", amount + ""));
 	}

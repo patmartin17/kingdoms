@@ -3,11 +3,9 @@ package com.rivensoftware.hardcoresmp.house.banner.menu;
 import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.properties.Property;
 import com.rivensoftware.hardcoresmp.HardcoreSMP;
+import com.rivensoftware.hardcoresmp.economy.InternalEconomy;
 import com.rivensoftware.hardcoresmp.tools.MessageTool;
-import net.milkbowl.vault.economy.Economy;
-import net.milkbowl.vault.economy.EconomyResponse;
 import org.bukkit.Material;
-import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
@@ -27,7 +25,7 @@ import java.util.UUID;
 public class BannerMenu implements Listener
 {
 	private static HardcoreSMP plugin = HardcoreSMP.getInstance();
-	private static Economy economy = plugin.getEconomy();
+	private static InternalEconomy economy = plugin.getInternalEconomy();
 	
 	public static Menu bannerMenu() 
 	{
@@ -139,33 +137,39 @@ public class BannerMenu implements Listener
 	
 	public static void handleBuy(Slot slot, ItemStack item, double price) 
 	{
-		DecimalFormat df = new DecimalFormat("0.00");
-		df.setGroupingUsed(true);
-		df.setGroupingSize(3);
-		
-		slot.setClickHandler((player, info) -> 
-		{
-			EconomyResponse response = economy.withdrawPlayer((OfflinePlayer)player, price);
-			if(response.transactionSuccess())
-			{
-				if(player.getInventory().firstEmpty() == -1)
-				{
-					player.sendMessage(MessageTool.color("&cYour inventory is full!"));
-				}
-				else
-				{
-					player.getInventory().addItem(item);
-					player.sendMessage(MessageTool.color("&aSuccessfully purchased &fx" + item.getAmount() + " " + MessageTool.getPrettyName(item.getType().name())));	
-					player.sendMessage(MessageTool.color("&6Gold Balance&7: &6" + df.format(economy.getBalance(player)) + "g"));
-				}
-			}
-			else
-			{
-				player.sendMessage(MessageTool.color("&cYou can not afford this item."));
-			}
-		});
+	    DecimalFormat df = new DecimalFormat("0.00");
+	    df.setGroupingUsed(true);
+	    df.setGroupingSize(3);
+	    
+	    slot.setClickHandler((player, info) -> 
+	    {
+	        UUID playerUUID = player.getUniqueId();
+	        double playerBalance = economy.getBalance(playerUUID);
+
+	        if (playerBalance >= price) 
+	        {
+	            economy.removeBalance(playerUUID, price);
+
+	            if (player.getInventory().firstEmpty() == -1)
+	            {
+	                player.sendMessage(MessageTool.color("&cYour inventory is full!"));
+	                // If the transaction was successful but inventory is full, refund the player
+	                economy.addBalance(playerUUID, price);
+	            }
+	            else
+	            {
+	                player.getInventory().addItem(item);
+	                player.sendMessage(MessageTool.color("&aSuccessfully purchased &fx" + item.getAmount() + " " + MessageTool.getPrettyName(item.getType().name())));    
+	                player.sendMessage(MessageTool.color("&6Gold Balance&7: &6" + df.format(economy.getBalance(playerUUID)) + "g"));
+	            }
+	        }
+	        else
+	        {
+	            player.sendMessage(MessageTool.color("&cYou cannot afford this item."));
+	        }
+	    });
 	}
-	
+
     public static SkullMeta getSkullMetaTextureByB64(SkullMeta meta, String texture) 
     {
         GameProfile profile = new GameProfile(UUID.randomUUID(), "");

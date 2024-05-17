@@ -1,5 +1,31 @@
 package com.rivensoftware.hardcoresmp.profile;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.UUID;
+import java.util.logging.Level;
+
+import org.bson.Document;
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.Location;
+import org.bukkit.entity.Player;
+import org.bukkit.plugin.Plugin;
+import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.scoreboard.NameTagVisibility;
+import org.bukkit.scoreboard.Scoreboard;
+import org.bukkit.scoreboard.Team;
+
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -12,6 +38,7 @@ import com.mongodb.client.result.UpdateResult;
 import com.rivensoftware.hardcoresmp.HardcoreSMP;
 import com.rivensoftware.hardcoresmp.addons.claimwall.ClaimWall;
 import com.rivensoftware.hardcoresmp.addons.deathlookup.DeathLookup;
+import com.rivensoftware.hardcoresmp.economy.MySQLManager;
 import com.rivensoftware.hardcoresmp.event.procedure.CapturePointCreateProcedure;
 import com.rivensoftware.hardcoresmp.house.House;
 import com.rivensoftware.hardcoresmp.house.claim.Claim;
@@ -33,30 +60,11 @@ import com.rivensoftware.hardcoresmp.tools.InventorySerializer;
 import com.rivensoftware.hardcoresmp.tools.LocationSerialization;
 import com.rivensoftware.hardcoresmp.tools.MessageTool;
 import com.rivensoftware.hardcoresmp.tools.player.PlayerTool;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.UUID;
-import java.util.logging.Level;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.bson.Document;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.Location;
-import org.bukkit.entity.Player;
-import org.bukkit.plugin.Plugin;
-import org.bukkit.scheduler.BukkitRunnable;
-import org.bukkit.scoreboard.NameTagVisibility;
-import org.bukkit.scoreboard.Scoreboard;
-import org.bukkit.scoreboard.Team;
 
+@SuppressWarnings("deprecation")
 @Getter
 @Setter
 public class Profile {
@@ -123,6 +131,10 @@ public class Profile {
 	private House house;
 
 	private ProfileChatType chatType;
+	
+	private double balance;
+	
+    public static MySQLManager mySQLManager = HardcoreSMP.getInstance().getMySQLManager();
 
 	private static MongoCollection<Document> collection = plugin.getKingdomsDatabase().getProfiles();
 
@@ -139,6 +151,7 @@ public class Profile {
 		this.previousFights = new LinkedHashMap<>();
 		this.safeLogout = true;
 		this.deathban = null;
+        this.balance = loadBalance();
 		for (House house : House.getHouses().values()) {
 			if (house.getAllPlayerUuids().contains(uuid))
 				this.house = house;
@@ -371,7 +384,6 @@ public class Profile {
 		}).runTaskLater((Plugin)plugin, 20L);
 	}
 
-	@SuppressWarnings("deprecation")
 	private Team getExistingOrCreateNewTeam(String string, Scoreboard scoreboard, ChatColor color) {
 		Team toReturn = scoreboard.getTeam(string);
 		if (toReturn == null) {
@@ -550,4 +562,58 @@ public class Profile {
 			this.leftSpawn = false;
 		}
 	}
+	
+    public void setBalance(double balance) {
+        this.balance = balance;
+        saveBalance(); // Save balance to database
+    }
+
+    public void addBalance(double amount) {
+        this.balance += amount;
+        saveBalance(); // Save updated balance to database
+    }
+
+    public void removeBalance(double amount) {
+        this.balance -= amount;
+        saveBalance(); // Save updated balance to database
+    }
+
+    private double loadBalance() {
+        try (Connection connection = mySQLManager.getConnection();
+             PreparedStatement statement = connection.prepareStatement("SELECT balance FROM player_balances WHERE player_uuid = ?")) {
+            statement.setString(1, this.uuid.toString());
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                return resultSet.getDouble("balance");
+            } else {
+                createPlayerBalance(0.0); // Create a new record with zero balance if not exists
+                return 0.0;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0.0;
+    }
+
+    private void saveBalance() {
+        try (Connection connection = mySQLManager.getConnection();
+             PreparedStatement statement = connection.prepareStatement("UPDATE player_balances SET balance = ? WHERE player_uuid = ?")) {
+            statement.setDouble(1, balance);
+            statement.setString(2, this.uuid.toString());
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void createPlayerBalance(double initialBalance) {
+        try (Connection connection = mySQLManager.getConnection();
+             PreparedStatement statement = connection.prepareStatement("INSERT INTO player_balances (player_uuid, balance) VALUES (?, ?)")) {
+            statement.setString(1, this.uuid.toString());
+            statement.setDouble(2, initialBalance);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }

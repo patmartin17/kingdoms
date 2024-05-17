@@ -2,6 +2,7 @@ C:\Users\samue\Desktop\Kingdoms\src\com\rivensoftware\hardcoresmp\storage\file\C
 C:\Users\samue\Desktop\Kingdoms\src\com\rivensoftware\hardcoresmp\house\banner\menu\BannerViewMenu.java
 C:\Users\samue\Desktop\Kingdoms\src\com\rivensoftware\hardcoresmp\house\commands\captain\HouseAllyCommand.java
 C:\Users\samue\Desktop\Kingdoms\src\com\rivensoftware\hardcoresmp\addons\deathlookup\DeathLookup.java
+C:\Users\samue\Desktop\Kingdoms\src\com\rivensoftware\hardcoresmp\economy\MySQLManager.java
 C:\Users\samue\Desktop\Kingdoms\src\com\rivensoftware\hardcoresmp\event\procedure\CapturePointCreateProcedure.java
 C:\Users\samue\Desktop\Kingdoms\src\com\rivensoftware\hardcoresmp\house\banner\menu\BannerCustomMenu.java
 C:\Users\samue\Desktop\Kingdoms\src\com\rivensoftware\hardcoresmp\profile\cooldowns\ProfileCooldownType.java
@@ -128,6 +129,7 @@ C:\Users\samue\Desktop\Kingdoms\src\com\rivensoftware\hardcoresmp\house\events\p
 C:\Users\samue\Desktop\Kingdoms\src\com\bizarrealex\aether\event\BoardCreateEvent.java
 C:\Users\samue\Desktop\Kingdoms\src\com\rivensoftware\hardcoresmp\house\commands\HouseListCommand.java
 C:\Users\samue\Desktop\Kingdoms\src\com\rivensoftware\hardcoresmp\house\commands\HouseCommand.java
+C:\Users\samue\Desktop\Kingdoms\src\com\rivensoftware\hardcoresmp\economy\EconomyCommands.java
 C:\Users\samue\Desktop\Kingdoms\src\com\rivensoftware\hardcoresmp\addons\claimwall\ClaimWallListeners.java
 C:\Users\samue\Desktop\Kingdoms\src\com\rivensoftware\hardcoresmp\event\capturepoint\CapturePointEvent.java
 C:\Users\samue\Desktop\Kingdoms\src\com\rivensoftware\hardcoresmp\event\procedure\CapturePointCreateProcedureListeners.java
@@ -167,6 +169,7 @@ C:\Users\samue\Desktop\Kingdoms\src\com\rivensoftware\hardcoresmp\event\Event.ja
 C:\Users\samue\Desktop\Kingdoms\src\com\rivensoftware\hardcoresmp\scoreboard\FastBoard.java
 C:\Users\samue\Desktop\Kingdoms\src\com\rivensoftware\hardcoresmp\event\capturepoint\CapturePointListeners.java
 C:\Users\samue\Desktop\Kingdoms\src\com\rivensoftware\hardcoresmp\house\commands\captain\HouseRenameCommand.java
+C:\Users\samue\Desktop\Kingdoms\src\com\rivensoftware\hardcoresmp\economy\InternalEconomy.java
 C:\Users\samue\Desktop\Kingdoms\src\com\rivensoftware\hardcoresmp\tools\BannerTool.java
 C:\Users\samue\Desktop\Kingdoms\src\com\bizarrealex\aether\example\ExampleBoardAdapter.java
 C:\Users\samue\Desktop\Kingdoms\src\com\rivensoftware\hardcoresmp\custom\blocks\ores\CompressedStarOre.java

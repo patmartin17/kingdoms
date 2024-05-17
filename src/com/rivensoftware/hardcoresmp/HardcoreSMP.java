@@ -1,6 +1,7 @@
 package com.rivensoftware.hardcoresmp;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -24,6 +25,8 @@ import com.rivensoftware.hardcoresmp.addons.inventory.LastInventoryCommand;
 import com.rivensoftware.hardcoresmp.addons.mobstack.MobStackListeners;
 import com.rivensoftware.hardcoresmp.commands.DepositCommand;
 import com.rivensoftware.hardcoresmp.commands.WithdrawCommand;
+import com.rivensoftware.hardcoresmp.economy.InternalEconomy;
+import com.rivensoftware.hardcoresmp.economy.MySQLManager;
 import com.rivensoftware.hardcoresmp.event.capturepoint.CapturePointListeners;
 import com.rivensoftware.hardcoresmp.event.capturepoint.commands.CapturePointCommand;
 import com.rivensoftware.hardcoresmp.event.capturepoint.commands.CapturePointStartCommand;
@@ -101,7 +104,6 @@ import com.rivensoftware.hardcoresmp.tools.player.SimpleOfflinePlayer;
 import co.aikar.commands.PaperCommandManager;
 import lombok.Getter;
 import lombok.Setter;
-import net.milkbowl.vault.economy.Economy;
 
 public class HardcoreSMP extends JavaPlugin
 {
@@ -118,7 +120,8 @@ public class HardcoreSMP extends JavaPlugin
 	@Getter private ConfigFile scoreboardConfig;
 	@Getter private TaxTask taxTask;
 	@Getter private PluginManager pluginManager;
-	@Getter private Economy economy;
+    @Getter private MySQLManager mySQLManager;
+    @Getter private InternalEconomy internalEconomy;
 	@Getter private UpdateOptions options;
 
 	@Override
@@ -137,10 +140,24 @@ public class HardcoreSMP extends JavaPlugin
 	    this.messageConfig = new ConfigFile(this, "messages");
 	    this.languageConfig = new ConfigFile(this, "en_US");
 	    this.scoreboardConfig = new ConfigFile(this, "scoreboard");
-		this.economy = (Economy)Bukkit.getServer().getServicesManager().getRegistration(Economy.class).getProvider();
+        this.mySQLManager = new MySQLManager("localhost", 3306, "riven_network", "root", "C0nf1n3m3nt@G0d");
+        try {
+            mySQLManager.connect();
+            getLogger().info("MySQL connection established successfully.");
+        } catch (SQLException e) {
+            e.printStackTrace();
+            getLogger().severe("Failed to establish MySQL connection. Disabling plugin.");
+            getServer().getPluginManager().disablePlugin(this);
+            return;
+        }
+
 		this.options = new UpdateOptions().upsert(true);
 		new Aether(this, (BoardAdapter)new KingdomsBoardAdapter(), (new AetherOptions()).hook(true));
 
+        this.internalEconomy = new InternalEconomy(mySQLManager);
+        PaperCommandManager commandManager = new PaperCommandManager(this);
+        internalEconomy.registerCommands(commandManager);
+		
 		/*
 		 * Load all simple offline players.
 		 */
@@ -211,7 +228,15 @@ public class HardcoreSMP extends JavaPlugin
 			e.printStackTrace();
 		}
 		
+		
 		kingdomsDatabase.getClient().close();
+		
+        try {
+            mySQLManager.disconnect();
+            getLogger().info("MySQL connection closed successfully.");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 	}
 	
 	/*

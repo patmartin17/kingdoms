@@ -141,7 +141,7 @@ public class House
 		double total = 0;
 		for(UUID uuid : members)
 		{
-			double playerBalance = plugin.getEconomy().getBalance(Bukkit.getOfflinePlayer(uuid));
+			double playerBalance = plugin.getInternalEconomy().getOfflineBalance(uuid);
 			total = total + playerBalance;
 		}
 		total = total + balance;
