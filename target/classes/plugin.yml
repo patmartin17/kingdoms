@@ -1,0 +1,8 @@
+name: HardcoreSMP
+version: 1.0.0-BETA
+description: instance housing technology.
+author: [Pattt]
+website: challenge.games
+main: com.rivensoftware.hardcoresmp.HardcoreSMP
+api-version: 1.13
+depend: [Vault]

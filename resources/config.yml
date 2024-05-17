@@ -1,0 +1,36 @@
+MONGO:
+  DATABASE: "KINGDOMS"
+  HOST: "127.0.0.1"
+  PORT: 27017
+  AUTHENTICATION:
+    ENABLED: FALSE
+    DATABASE: "KINGDOMS"
+    USER: "riven"
+    PASSWORD: "C0nf1n3m3nt@G0d"
+TAB_LIST:
+  ENABLED: true
+COOLDOWN:
+  ENDER_PEARL: 16
+  COMBAT_TAG: 30
+  HORN_COOLDOWN: 30
+COOLDOWN_MESSAGE:
+  ENDER_PEARL: "&cYou must wait &l%TIME%&c before enderpearling again!"
+  COMBAT_TAG: "&cYou cannot enter a safezone whilst combat tagged."
+  HORN_COOLDOWN: "&cYou must wait &l%TIME%&c before using a battle horn again!"
+CLAIM_WALL:
+  PVP_PROTECTION:
+    RANGE: 10
+    SIZE: 10
+    BLOCK: "RED_STAINED_GLASS"
+MOB_STACKING:
+  MAX_COUNT: 501
+  EXCLUDED_MOBS:
+    - "ENDER_DRAGON"
+    - "WITHER"
+    - "WARDEN"
+    - "BAT"
+    - "HORSE"
+    - "VILLAGER"
+COMBAT_LOGGER:
+  ENTITY_TYPE: "WITHER_SKELETON"
+  DESPAWN_TIME: 30

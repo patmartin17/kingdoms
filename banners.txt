@@ -1,0 +1,23 @@
+- Currently cant get negative effects
+- Need a cooldown on Horns
+- update banners when changed. Add cooldown to changing banners
+//banners need to be saved into active banners tab
+//Add the ability to use a gui instead of commands. It wont make sense with commands. /h banner opens gui and you can put stuff in there
+//if they middle click a banner it adds lore that says Main Banner
+//banner shop with all banner items for customization that costs gold: first usage of essentials in this plugin
+//change the hhead to an arrow as return and banners
+//Possibly allow the size of banners to change. Either choose primary and secondary banners in a gui or if they want they can grab a whole row and 
+	make a custom version of it. This way we can make it an array of banner objects that we can use get(0) for the fisrt one and the rest can be in the array
+	/h banner -> custom or default -> default: primary and secondary (if secondary is empty then use the same color) -> custom: can set each banner in the
+	inv and can remove if they want. All 9 are open but there cant be an empty one in the middle
+	the primary banner will be a seperate variable with a list of the following banners. The banner that is the main one will be enchanted as main banner
+	so this way they can make any array of banners and the main one can be anyone.
+//after reload banners are saved but break like regular blocks
+//Add persistent data to blocks that are connected to banners and remove when the banner is removed (these blocks cant be moved by a piston or
+blown up)
+//Can braek secondary banners. Maybe add persistent data to these as well
+//Effects need to stack up to a certain point. 
+
+Later future ideas: 
+- make it so you can delete banners within the active banners tab.
+- magic horn
