@@ -173,6 +173,10 @@ public class ClaimWallListeners implements Listener
 
             if (entering != null && (leaving == null || !leaving.equals(entering))) 
             {
+            	if(entering.getHouse().getHouseName().equalsIgnoreCase("Spawn"))
+            	{
+            		return;
+            	}
                 if (ClaimWallType.PVP_PROTECTION.isValid(entering)) 
                 {
                     event.setCancelled(true);

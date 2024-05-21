@@ -31,22 +31,26 @@ public class HouseCommand extends BaseCommand
 		sendHelp(sender, page);
 	}
 	
-	private void sendHelp(CommandSender sender, int page)
-	{
-		List<List<String>> help = new ArrayList<List<String>>();
-		
-		for (String key : configuration.getConfigurationSection("house-help").getKeys(false))
-			help.add(configuration.getStringList("house-help." + key)); 
-		
-		if (page > 0 && page <= help.size()) 
-		{
-			for (String msg : help.get(page - 1))
-				sender.sendMessage(MessageTool.color(msg)); 
-		} 
-		else
-		{
-			for (String msg : help.get(0))
-				sender.sendMessage(MessageTool.color(msg)); 	
-		}
+	private void sendHelp(CommandSender sender, int page) {
+	    List<List<String>> help = new ArrayList<List<String>>();
+
+	    if (configuration.getConfigurationSection("house-help") != null) {
+	        for (String key : configuration.getConfigurationSection("house-help").getKeys(false)) {
+	            help.add(configuration.getStringList("house-help." + key));
+	        }
+	    } else {
+	        sender.sendMessage(MessageTool.color("&cNo help topics found. Please check the help.yml configuration."));
+	        return;
+	    }
+
+	    if (page > 0 && page <= help.size()) {
+	        for (String msg : help.get(page - 1)) {
+	            sender.sendMessage(MessageTool.color(msg));
+	        }
+	    } else {
+	        for (String msg : help.get(0)) {
+	            sender.sendMessage(MessageTool.color(msg));
+	        }
+	    }
 	}
 }

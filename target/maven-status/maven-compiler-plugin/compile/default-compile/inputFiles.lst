@@ -43,6 +43,7 @@ C:\Users\samue\Desktop\Kingdoms\src\com\rivensoftware\hardcoresmp\house\banner\m
 C:\Users\samue\Desktop\Kingdoms\src\com\bizarrealex\aether\events\BoardCreateEvent.java
 C:\Users\samue\Desktop\Kingdoms\src\com\rivensoftware\hardcoresmp\scoreboard\FastReflection.java
 C:\Users\samue\Desktop\Kingdoms\src\com\rivensoftware\hardcoresmp\profile\teleport\ProfileTeleportTask.java
+C:\Users\samue\Desktop\Kingdoms\src\com\rivensoftware\hardcoresmp\error\ErrorHandling.java
 C:\Users\samue\Desktop\Kingdoms\src\com\rivensoftware\hardcoresmp\house\commands\captain\HouseWithdrawCommand.java
 C:\Users\samue\Desktop\Kingdoms\src\com\rivensoftware\hardcoresmp\profile\fight\ProfileFightEffect.java
 C:\Users\samue\Desktop\Kingdoms\src\com\rivensoftware\hardcoresmp\house\commands\lord\HouseLordCommand.java
@@ -178,6 +179,7 @@ C:\Users\samue\Desktop\Kingdoms\src\com\rivensoftware\hardcoresmp\profile\protec
 C:\Users\samue\Desktop\Kingdoms\src\com\rivensoftware\hardcoresmp\profile\admin\commands\AdminCommand.java
 C:\Users\samue\Desktop\Kingdoms\src\com\rivensoftware\hardcoresmp\tools\InventorySerializer.java
 C:\Users\samue\Desktop\Kingdoms\src\com\rivensoftware\hardcoresmp\house\claim\ClaimPillar.java
+C:\Users\samue\Desktop\Kingdoms\src\com\rivensoftware\hardcoresmp\profile\deathban\ProfileDeathbanUnused.java
 C:\Users\samue\Desktop\Kingdoms\src\com\rivensoftware\hardcoresmp\tools\LocationSerialization.java
 C:\Users\samue\Desktop\Kingdoms\src\com\rivensoftware\hardcoresmp\house\commands\captain\HouseClaimCommand.java
 C:\Users\samue\Desktop\Kingdoms\src\com\rivensoftware\hardcoresmp\house\events\HouseDeclareNeutralEvent.java

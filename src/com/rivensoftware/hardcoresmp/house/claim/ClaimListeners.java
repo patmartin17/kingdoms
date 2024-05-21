@@ -170,8 +170,11 @@ public class ClaimListeners implements Listener
 
 				if(Claim.intersectsRestrictedArea(location))
 				{
-					player.sendMessage(MessageTool.color("&cYou cannot claim royal house territory! (1000x1000 from spawn)"));
-					return;
+					if(!player.isOp())
+					{
+						player.sendMessage(MessageTool.color("&cYou cannot claim royal house territory! (1000x1000 from spawn)"));
+						return;	
+					}
 				}
 
 				int toDisplay = 0;
@@ -522,7 +525,6 @@ public class ClaimListeners implements Listener
 			}
 		}
 	}
-
 	@EventHandler
 	public void onHangingBreakByEntityEvent(HangingBreakByEntityEvent event) 
 	{

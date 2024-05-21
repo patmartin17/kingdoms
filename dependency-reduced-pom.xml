@@ -2,7 +2,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.rivensoftware</groupId>
-  <artifactId>kingdoms</artifactId>
+  <artifactId>Kingdoms</artifactId>
   <version>1.0.0-SNAPSHOT</version>
   <build>
     <sourceDirectory>${basedir}/src</sourceDirectory>
@@ -67,8 +67,8 @@
       <url>https://repo.dmulloy2.net/repository/public/</url>
     </repository>
     <repository>
-      <id>spigot-repo</id>
-      <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
+      <id>papermc</id>
+      <url>https://papermc.io/repo/repository/maven-public/</url>
     </repository>
     <repository>
       <id>jitpack.io</id>
@@ -77,6 +77,10 @@
     <repository>
       <id>jeff-media-gbr</id>
       <url>https://hub.jeff-media.com/nexus/repository/jeff-media-public/</url>
+    </repository>
+    <repository>
+      <id>viaversion-repo</id>
+      <url>https://repo.viaversion.com</url>
     </repository>
   </repositories>
   <dependencies>

@@ -172,15 +172,24 @@ public class Profile {
 	}
 
 	public static Profile getByUUID(UUID uuid) {
-		if (activeProfiles.containsKey(uuid))
-			return activeProfiles.get(uuid);
-		return new Profile(uuid);
+	    if (Admin.getAdminProfiles().containsKey(uuid)) {
+	        return Admin.getByUUID(uuid);
+	    }
+	    if (activeProfiles.containsKey(uuid)) {
+	        return activeProfiles.get(uuid);
+	    }
+	    return new Profile(uuid);
 	}
 
 	public static Profile getByPlayer(Player player) {
-		if (activeProfiles.containsKey(player.getUniqueId()))
-			return activeProfiles.get(player.getUniqueId());
-		return null;
+	    UUID uuid = player.getUniqueId();
+	    if (Admin.getAdminProfiles().containsKey(uuid)) {
+	        return Admin.getByUUID(uuid);
+	    }
+	    if (activeProfiles.containsKey(uuid)) {
+	        return activeProfiles.get(uuid);
+	    }
+	    return null;
 	}
 
 	public static Profile getByName(String name) {
@@ -226,9 +235,14 @@ public class Profile {
 	}
 
 	public static void loadProfile(Player player) {
-		Profile profile = getByUUID(player.getUniqueId());
-		if (profile == null)
-			Bukkit.getConsoleSender().sendMessage(MessageTool.color(player.getName() + "&c's profile was not loaded correctly"));
+	    if (player.hasPermission("admin")) {
+	        Admin.loadAdminProfile(player);
+	    } else {
+	        Profile profile = getByUUID(player.getUniqueId());
+	        if (profile == null) {
+	            Bukkit.getConsoleSender().sendMessage(MessageTool.color(player.getName() + "&c's profile was not loaded correctly"));
+	        }
+	    }
 	}
 
 	public static void unloadProfile(Player player) {
@@ -240,173 +254,78 @@ public class Profile {
 		Bukkit.getConsoleSender().sendMessage(MessageTool.color("&c" + player.getName() + "'s profile was not correctly saved."));
 	}
 
-	public void updateTeams() {
-		(new BukkitRunnable() {
-			public void run() {
-				Player player = Bukkit.getPlayer(Profile.this.uuid);
-				if (player != null) {
-					Scoreboard scoreboard;
-					boolean newScoreboard = false;
-					if (!player.getScoreboard().equals(Bukkit.getScoreboardManager().getMainScoreboard())) {
-						scoreboard = player.getScoreboard();
-					} else {
-						scoreboard = Bukkit.getScoreboardManager().getNewScoreboard();
-						newScoreboard = true;
-					}
-					Team self = Profile.this.getExistingOrCreateNewTeam("self", scoreboard, ChatColor.GREEN);
-					Team admin = Profile.this.getExistingOrCreateNewTeam("admin", scoreboard, ChatColor.DARK_GREEN);
-					Team wanted = Profile.this.getExistingOrCreateNewTeam("wanted", scoreboard, ChatColor.DARK_RED);
-					Team criminal = Profile.this.getExistingOrCreateNewTeam("criminal", scoreboard, ChatColor.DARK_RED);
-					Team friendly = Profile.this.getExistingOrCreateNewTeam("friendly", scoreboard, ChatColor.DARK_GREEN);
-					Team ally = Profile.this.getExistingOrCreateNewTeam("ally", scoreboard, ChatColor.BLUE);
-					Team neutral = Profile.this.getExistingOrCreateNewTeam("neutral", scoreboard, ChatColor.YELLOW);
-					Team enemy = Profile.this.getExistingOrCreateNewTeam("enemy", scoreboard, ChatColor.RED);
-					for (Admin admins : Admin.getAdminProfiles().values()) {
-						if (!admin.hasEntry(admins.getName()))
-							admin.addEntry(admins.getName());
-					}
-					if (Profile.this.house != null) {
-						for (Player friendlyPlayer : Profile.this.house.getOnlinePlayers()) {
-							if (!friendlyPlayer.equals(player) &&
-									!Profile.getByPlayer(friendlyPlayer).isAdmin() &&
-									!friendly.hasEntry(friendlyPlayer.getName()))
-								friendly.addEntry(friendlyPlayer.getName());
-						}
-						for (House allyHouse : Profile.this.house.getAllies()) {
-							for (Player allyPlayer : allyHouse.getOnlinePlayers()) {
-								if (!Profile.getByPlayer(allyPlayer).isAdmin() &&
-										!ally.hasEntry(allyPlayer.getName()))
-									ally.addEntry(allyPlayer.getName());
-							}
-						}
-						for (House enemyHouse : Profile.this.house.getAllEnemies()) {
-							for (Player enemyPlayer : enemyHouse.getOnlinePlayers()) {
-								if (!Profile.getByPlayer(enemyPlayer).isAdmin() &&
-										!enemy.hasEntry(enemyPlayer.getName()))
-									enemy.addEntry(enemyPlayer.getName());
-							}
-						}
-					}
-					for (Player neutralPlayer : PlayerTool.getOnlinePlayers()) {
-						if (!neutralPlayer.getName().equals(player.getName())) {
-							if (Profile.getByPlayer(neutralPlayer).isAdmin())
-								continue;
-							if (friendly.hasEntry(neutralPlayer.getName()) && (Profile.this.house == null || !Profile.this.house.getOnlinePlayers().contains(neutralPlayer)))
-								friendly.removeEntry(neutralPlayer.getName());
-							if (ally.hasEntry(neutralPlayer.getName())) {
-								Profile neutralProfile = Profile.getByUUID(neutralPlayer.getUniqueId());
-								House neutralHouse = neutralProfile.getHouse();
-								if (neutralHouse == null || Profile.this.house == null || !Profile.this.house.getAllies().contains(neutralHouse))
-									ally.removeEntry(neutralPlayer.getName());
-							}
-							if (enemy.hasEntry(neutralPlayer.getName())) {
-								Profile enemyProfile = Profile.getByUUID(neutralPlayer.getUniqueId());
-								House enemyHouse = enemyProfile.getHouse();
-								if (enemyHouse == null || Profile.this.house == null || !Profile.this.house.getAllEnemies().contains(enemyHouse))
-									enemy.removeEntry(enemyProfile.getName());
-							}
-							if (!friendly.hasEntry(neutralPlayer.getName()) && !ally.hasEntry(neutralPlayer.getName()) && !enemy.hasEntry(neutralPlayer.getName()))
-								neutral.addEntry(neutralPlayer.getName());
-						}
-					}
-					if (!self.hasEntry(player.getName()))
-						self.addEntry(player.getName());
-					if (newScoreboard)
-						player.setScoreboard(scoreboard);
-				}
-			}
-		}).runTaskLater((Plugin)plugin, 5L);
-	}
+    public void updateTeams() {
+        Player player = Bukkit.getPlayer(this.uuid);
+        if (player != null) {
+            Scoreboard scoreboard = player.getScoreboard();
+            Team self = getExistingOrCreateNewTeam("self", scoreboard, ChatColor.DARK_GREEN);
+            Team friendly = getExistingOrCreateNewTeam("friendly", scoreboard, ChatColor.GREEN);
+            Team ally = getExistingOrCreateNewTeam("ally", scoreboard, ChatColor.BLUE);
+            Team neutral = getExistingOrCreateNewTeam("neutral", scoreboard, ChatColor.YELLOW);
+            Team enemy = getExistingOrCreateNewTeam("enemy", scoreboard, ChatColor.RED);
 
-	public void updateTeams(final Player toUpdate) {
-		(new BukkitRunnable() {
-			public void run() {
-				Player player = Bukkit.getPlayer(Profile.this.uuid);
-				if (player != null) {
-					Scoreboard scoreboard;
-					boolean newScoreboard = false;
-					if (!player.getScoreboard().equals(Bukkit.getScoreboardManager().getMainScoreboard())) {
-						scoreboard = player.getScoreboard();
-					} else {
-						scoreboard = Bukkit.getScoreboardManager().getNewScoreboard();
-						newScoreboard = true;
-					}
-					Team self = Profile.this.getExistingOrCreateNewTeam("self", scoreboard, ChatColor.GREEN);
-					Team admin = Profile.this.getExistingOrCreateNewTeam("admin", scoreboard, ChatColor.DARK_GREEN);
-					Team wanted = Profile.this.getExistingOrCreateNewTeam("wanted", scoreboard, ChatColor.DARK_RED);
-					Team criminal = Profile.this.getExistingOrCreateNewTeam("criminal", scoreboard, ChatColor.DARK_RED);
-					Team friendly = Profile.this.getExistingOrCreateNewTeam("friendly", scoreboard, ChatColor.DARK_GREEN);
-					Team ally = Profile.this.getExistingOrCreateNewTeam("ally", scoreboard, ChatColor.BLUE);
-					Team neutral = Profile.this.getExistingOrCreateNewTeam("neutral", scoreboard, ChatColor.YELLOW);
-					Team enemy = Profile.this.getExistingOrCreateNewTeam("enemy", scoreboard, ChatColor.RED);
-					if (Profile.this.getPlayer() != null && Profile.this.getPlayer().equals(toUpdate)) {
-						if (!self.hasEntry(toUpdate.getName()))
-							self.addEntry(toUpdate.getName());
-						return;
-					}
-					if ((Profile.getByPlayer(toUpdate)).isAdmin) {
-						if (!admin.hasEntry(toUpdate.getName()))
-							admin.addEntry(toUpdate.getName());
-						return;
-					}
-					if (Profile.this.house != null) {
-						if (Profile.this.house.getOnlinePlayers().contains(toUpdate) && !friendly.hasEntry(toUpdate.getName()))
-							friendly.addEntry(toUpdate.getName());
-						for (House allyHouse : Profile.this.house.getAllies()) {
-							if (allyHouse.getOnlinePlayers().contains(toUpdate) && !ally.hasEntry(toUpdate.getName()))
-								ally.addEntry(toUpdate.getName());
-						}
-						for (House enemyHouse : Profile.this.house.getAllEnemies()) {
-							if (enemyHouse.getOnlinePlayers().contains(toUpdate) && !enemy.hasEntry(toUpdate.getName()))
-								enemy.addEntry(toUpdate.getName());
-						}
-					}
-					if (friendly.hasEntry(toUpdate.getName()) && (Profile.this.house == null || !Profile.this.house.getOnlinePlayers().contains(toUpdate)))
-						friendly.removeEntry(toUpdate.getName());
-					if (ally.hasEntry(toUpdate.getName())) {
-						Profile neutralProfile = Profile.getByUUID(toUpdate.getUniqueId());
-						House neutralHouse = neutralProfile.getHouse();
-						if (neutralHouse == null || Profile.this.house == null || !Profile.this.house.getAllies().contains(neutralHouse))
-							ally.removeEntry(toUpdate.getName());
-					}
-					if (enemy.hasEntry(toUpdate.getName())) {
-						Profile neutralProfile = Profile.getByUUID(toUpdate.getUniqueId());
-						House neutralHouse = neutralProfile.getHouse();
-						if (neutralHouse == null || Profile.this.house == null || !Profile.this.house.getAllEnemies().contains(neutralHouse))
-							enemy.removeEntry(toUpdate.getName());
-					}
-					if (!friendly.hasEntry(toUpdate.getName()) && !ally.hasEntry(toUpdate.getName()) && !enemy.hasEntry(toUpdate.getName()))
-						neutral.addEntry(toUpdate.getName());
-					if (newScoreboard)
-						player.setScoreboard(scoreboard);
-				}
-			}
-		}).runTaskLater((Plugin)plugin, 20L);
-	}
+            // Set the player's own name tag color to dark green
+            if (!self.hasEntry(player.getName())) {
+                self.addEntry(player.getName());
+                Bukkit.getLogger().info("Setting " + player.getName() + "'s own name tag color to " + ChatColor.DARK_GREEN + " (reason: own player)");
+            }
 
-	private Team getExistingOrCreateNewTeam(String string, Scoreboard scoreboard, ChatColor color) {
-		Team toReturn = scoreboard.getTeam(string);
-		if (toReturn == null) {
-			toReturn = scoreboard.registerNewTeam(string);
-			toReturn.setColor(color);
-			toReturn.setCanSeeFriendlyInvisibles(true);
-			toReturn.setOption(Team.Option.NAME_TAG_VISIBILITY, Team.OptionStatus.ALWAYS);
-			toReturn.setNameTagVisibility(NameTagVisibility.ALWAYS);
-			if (toReturn.getName().equals("admin"))
-				toReturn.setPrefix(MessageTool.color("&5"));
-		}
-		return toReturn;
-	}
+            for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
+                if (!onlinePlayer.equals(player)) {
+                    Profile onlineProfile = Profile.getByUUID(onlinePlayer.getUniqueId());
+                    House onlineHouse = onlineProfile != null ? onlineProfile.getHouse() : null;
 
-	public static void sendGlobalTabUpdate() {
-		for (Player player : PlayerTool.getOnlinePlayers())
-			getByUUID(player.getUniqueId()).updateTeams();
-	}
+                    if (onlineHouse == null) {
+                        if (!neutral.hasEntry(onlinePlayer.getName())) {
+                            neutral.addEntry(onlinePlayer.getName());
+                            Bukkit.getLogger().info("Setting " + onlinePlayer.getName() + "'s name tag color to " + ChatColor.YELLOW + " for " + player.getName() + " (reason: not in any house)");
+                        }
+                    } else {
+                        if (this.house != null) {
+                            if (this.house.equals(onlineHouse)) {
+                                if (!friendly.hasEntry(onlinePlayer.getName())) {
+                                    friendly.addEntry(onlinePlayer.getName());
+                                    Bukkit.getLogger().info("Setting " + onlinePlayer.getName() + "'s name tag color to " + ChatColor.GREEN + " for " + player.getName() + " (reason: in the same house)");
+                                }
+                            } else if (this.house.getAllies() != null && this.house.getAllies().contains(onlineHouse)) {
+                                if (!ally.hasEntry(onlinePlayer.getName())) {
+                                    ally.addEntry(onlinePlayer.getName());
+                                    Bukkit.getLogger().info("Setting " + onlinePlayer.getName() + "'s name tag color to " + ChatColor.BLUE + " for " + player.getName() + " (reason: in an allied house)");
+                                }
+                            } else if (this.house.getAllEnemies() != null && this.house.getAllEnemies().contains(onlineHouse)) {
+                                if (!enemy.hasEntry(onlinePlayer.getName())) {
+                                    enemy.addEntry(onlinePlayer.getName());
+                                    Bukkit.getLogger().info("Setting " + onlinePlayer.getName() + "'s name tag color to " + ChatColor.RED + " for " + player.getName() + " (reason: in an enemy house)");
+                                }
+                            } else {
+                                if (!neutral.hasEntry(onlinePlayer.getName())) {
+                                    neutral.addEntry(onlinePlayer.getName());
+                                    Bukkit.getLogger().info("Setting " + onlinePlayer.getName() + "'s name tag color to " + ChatColor.YELLOW + " for " + player.getName() + " (reason: not in any related house)");
+                                }
+                            }
+                        } else {
+                            if (!neutral.hasEntry(onlinePlayer.getName())) {
+                                neutral.addEntry(onlinePlayer.getName());
+                                Bukkit.getLogger().info("Setting " + onlinePlayer.getName() + "'s name tag color to " + ChatColor.YELLOW + " for " + player.getName() + " (reason: not in any related house)");
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
 
-	public static void sendPlayerTabUpdate(Player toUpdate) {
-		for (Player player : PlayerTool.getOnlinePlayers())
-			getByUUID(player.getUniqueId()).updateTeams(toUpdate);
-	}
+    private Team getExistingOrCreateNewTeam(String name, Scoreboard scoreboard, ChatColor color) {
+        Team team = scoreboard.getTeam(name);
+        if (team == null) {
+            team = scoreboard.registerNewTeam(name);
+            team.setColor(color);
+            team.setCanSeeFriendlyInvisibles(true);
+            team.setOption(Team.Option.NAME_TAG_VISIBILITY, Team.OptionStatus.ALWAYS);
+            team.setNameTagVisibility(NameTagVisibility.ALWAYS);
+        }
+        return team;
+    }
 
 	private void saveFights() {
 		for (ProfileFight fight : this.fights) {
@@ -485,12 +404,12 @@ public class Profile {
 			document.put("leftSpawn", Boolean.valueOf(false));
 		document.put("general_lives", Double.valueOf(this.generalLives));
 		document.put("soulbound_lives", Double.valueOf(this.soulboundLives));
-		if (this.deathban != null) {
-			Document deathbanDocument = new Document();
-			deathbanDocument.put("createdAt", Long.valueOf(this.deathban.getCreatedAt()));
-			deathbanDocument.put("duration", Long.valueOf(this.deathban.getDuration()));
-			document.put("deathban", deathbanDocument);
-		}
+		//if (this.deathban != null) {
+		//	Document deathbanDocument = new Document();
+		//	deathbanDocument.put("createdAt", Long.valueOf(this.deathban.getCreatedAt()));
+		//	deathbanDocument.put("duration", Long.valueOf(this.deathban.getDuration()));
+		//	document.put("deathban", deathbanDocument);
+		//}
 		JsonArray fightsArray = new JsonArray();
 		for (UUID fight : this.previousFights.keySet()) {
 			JsonObject object = new JsonObject();
@@ -539,7 +458,7 @@ public class Profile {
 				this.respawning = true;
 			if (document.containsKey("deathban")) {
 				Document deathbanDocument = (Document)document.get("deathban");
-				this.deathban = new ProfileDeathban(deathbanDocument.getLong("createdAt").longValue(), deathbanDocument.getLong("duration").longValue());
+				this.deathban = new ProfileDeathban();
 			}
 			if (document.containsKey("general_lives"))
 				this.generalLives = document.getDouble("general_lives").doubleValue();

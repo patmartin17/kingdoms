@@ -77,28 +77,18 @@ public class Admin extends Profile
 		return null;
 	}
 
-	/*
-	 * Removes admin object from adminProfiles map and sets object to null.
-	 */
-	public static void unloadAdminProfile(Player player)
-	{
-		Admin admin = Admin.getByUUID(player.getUniqueId());
-
-		if (admin != null) 
-		{
-			Admin.getAdminProfiles().remove(admin.getUuid());
-			admin = null;
-			return;
-		} 
-		Bukkit.getConsoleSender().sendMessage(MessageTool.color("&c" + player.getName() + "'s admin profile was not correctly saved."));
+	public static void loadAdminProfile(Player player) {
+	    new Admin(player.getUniqueId());
 	}
 
-	/*
-	 * Loads admin object using player object by creating new instance. 
-	 */
-	public static void loadAdminProfile(Player player)
-	{
-		new Admin(player.getUniqueId());
+	public static void unloadAdminProfile(Player player) {
+	    Admin admin = Admin.getByUUID(player.getUniqueId());
+	    if (admin != null) {
+	        Admin.getAdminProfiles().remove(admin.getUuid());
+	        admin = null;
+	        return;
+	    }
+	    Bukkit.getConsoleSender().sendMessage(MessageTool.color("&c" + player.getName() + "'s admin profile was not correctly saved."));
 	}
 
 	/*

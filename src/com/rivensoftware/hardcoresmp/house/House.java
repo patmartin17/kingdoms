@@ -564,7 +564,12 @@ public class House
 			}
 		}
 
-		Profile.sendGlobalTabUpdate();
+		for (Player player : PlayerTool.getOnlinePlayers()) {
+		    Profile profile = Profile.getByUUID(player.getUniqueId());
+		    if (profile != null) {
+		        profile.updateTeams();
+		    }
+		}
 		HardcoreSMP.setLoaded(true);
 	}
 

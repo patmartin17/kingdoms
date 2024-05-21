@@ -31,7 +31,6 @@ com\rivensoftware\hardcoresmp\profile\admin\AdminListeners$1.class
 com\rivensoftware\hardcoresmp\addons\deathlookup\DeathLookupData.class
 com\rivensoftware\hardcoresmp\house\banner\events\BannerUpdateEvent.class
 com\rivensoftware\hardcoresmp\house\banner\menu\BannerMenuType$1.class
-com\rivensoftware\hardcoresmp\profile\Profile$1.class
 com\rivensoftware\hardcoresmp\profile\Profile.class
 com\rivensoftware\hardcoresmp\house\banner\effects\HeldBannerPositiveEffects$3.class
 com\rivensoftware\hardcoresmp\event\procedure\command\CapturePointCreateProcedureCommand.class
@@ -45,7 +44,6 @@ com\rivensoftware\hardcoresmp\house\commands\HouseChatCommand$1.class
 com\rivensoftware\hardcoresmp\house\banner\BattleListeners.class
 com\rivensoftware\hardcoresmp\profile\protection\commands\ProfileProtectionCommand.class
 com\rivensoftware\hardcoresmp\profile\fight\killer\type\ProfileFightPlayerKiller.class
-com\rivensoftware\hardcoresmp\profile\Profile$2.class
 com\rivensoftware\hardcoresmp\profile\protection\ProfileProtectionListeners.class
 com\rivensoftware\hardcoresmp\addons\economy\commands\GoldCommand.class
 com\rivensoftware\hardcoresmp\profile\lives\LifeType$1.class
@@ -59,7 +57,6 @@ com\rivensoftware\hardcoresmp\house\taxes\TaxListeners.class
 com\rivensoftware\hardcoresmp\house\banner\menu\BannerMenuType$6.class
 com\rivensoftware\hardcoresmp\house\banner\BannerListeners.class
 com\rivensoftware\hardcoresmp\house\banner\menu\shop\BannerShopMenu.class
-com\rivensoftware\hardcoresmp\profile\deathban\ProfileDeathban$1$1.class
 com\rivensoftware\hardcoresmp\profile\fight\killer\type\ProfileFightEnvironmentKiller.class
 com\rivensoftware\hardcoresmp\event\procedure\CapturePointCreateProcedureListeners$1.class
 com\rivensoftware\hardcoresmp\house\commands\captain\HouseUnclaimCommand.class
@@ -140,7 +137,6 @@ com\rivensoftware\hardcoresmp\addons\combatlogger\CombatLoggerListeners$1.class
 com\rivensoftware\hardcoresmp\house\banner\Banner$1.class
 com\rivensoftware\hardcoresmp\house\banner\menu\BannerCustomMenu.class
 com\rivensoftware\hardcoresmp\house\commands\lord\HouseGoldCommands.class
-com\rivensoftware\hardcoresmp\profile\deathban\ProfileDeathban$1$2.class
 com\rivensoftware\hardcoresmp\house\banner\effects\WallBannerNegativeEffects$1.class
 com\rivensoftware\hardcoresmp\house\banner\menu\BannerMenuType$4.class
 com\rivensoftware\hardcoresmp\house\commands\HouseCommand.class

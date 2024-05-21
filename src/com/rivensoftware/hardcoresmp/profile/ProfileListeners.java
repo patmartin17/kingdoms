@@ -1,5 +1,7 @@
 package com.rivensoftware.hardcoresmp.profile;
 
+import java.util.UUID;
+
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
@@ -36,61 +38,52 @@ public class ProfileListeners implements Listener
 	private HardcoreSMP plugin = HardcoreSMP.getInstance();
 	
 	@EventHandler
-	public void onPlayerJoinEvent(PlayerJoinEvent event) 
-	{
-		Player player = event.getPlayer();
-		Profile.sendPlayerTabUpdate(player);
+	public void onPlayerJoinEvent(PlayerJoinEvent event) {
+	    Player player = event.getPlayer();
+	    Profile profile = Profile.getByUUID(player.getUniqueId());
+	    profile.updateTeams();
 
-		long start = System.currentTimeMillis();
+	    long start = System.currentTimeMillis();
+	    event.setJoinMessage(null);
+	    determineAdmin(player, start);
 
-		event.setJoinMessage(null);
+	    profile.setName(player.getName());
+	    profile.setInSpawn(ProfileProtection.isWithin(player.getLocation()));
+	    profile.setLastInside(Claim.getProminentClaimAt(player.getLocation()));
 
-		determineAdmin(player, start);
+	    SimpleOfflinePlayer offlinePlayer = SimpleOfflinePlayer.getByUuid(player.getUniqueId());
+	    if (offlinePlayer == null) {
+	        profile.setSoulboundLives(2);
+	        profile.setGeneralLives(1);
+	        new SimpleOfflinePlayer(player);
+	    } else if (!offlinePlayer.getName().equals(player.getName())) {
+	        offlinePlayer.setName(player.getName());
+	    }
 
-		Profile profile = Profile.getByUUID(player.getUniqueId());
-		profile.setName(player.getName());
-		profile.setInSpawn(ProfileProtection.isWithin(player.getLocation()));
-		profile.setLastInside(Claim.getProminentClaimAt(player.getLocation()));
-
-		SimpleOfflinePlayer offlinePlayer = SimpleOfflinePlayer.getByUuid(player.getUniqueId());
-		if (offlinePlayer == null) 
-		{
-			profile.setSoulboundLives(2);
-			profile.setGeneralLives(1);
-			new SimpleOfflinePlayer(player);
-		} 
-		else if (!offlinePlayer.getName().equals(player.getName())) 
-		{
-			offlinePlayer.setName(player.getName());
-		} 
-
-		Claim claim = Claim.getProminentClaimAt(event.getPlayer().getLocation());
-		if (claim != null)
-			profile.setLastInside(claim); 
+	    Claim claim = Claim.getProminentClaimAt(event.getPlayer().getLocation());
+	    if (claim != null)
+	        profile.setLastInside(claim);
+	        
+	    // Update the player's team
+	    profile.updateTeams();
 	}
 
-	@EventHandler
-	public void onPlayerQuitEvent(PlayerQuitEvent event) 
-	{
-		Player player = event.getPlayer();
+    @EventHandler
+    public void onPlayerQuitEvent(PlayerQuitEvent event) {
+        Player player = event.getPlayer();
+        event.setQuitMessage(null);
 
-		event.setQuitMessage(null);
-
-		if(Profile.getByPlayer(player) != null)
-		{
-			new BukkitRunnable() 
-			{
-
-				@Override
-				public void run() 
-				{
-					Profile profile = Profile.getByPlayer(player);
-					Profile.unloadProfile(player);
-					profile.save(options);
-				}
-			}.runTaskLater(plugin, 20L);
-		}
-	}
+        if (Profile.getByPlayer(player) != null) {
+            new BukkitRunnable() {
+                @Override
+                public void run() {
+                    Profile profile = Profile.getByPlayer(player);
+                    Profile.unloadProfile(player);
+                    profile.save(new UpdateOptions().upsert(true));
+                }
+            }.runTaskLater(plugin, 20L);
+        }
+    }
 	
 	@EventHandler
 	public void onInventoryMoveItemEvent(InventoryMoveItemEvent event) 
@@ -128,55 +121,40 @@ public class ProfileListeners implements Listener
 		} 
 	}
 
-	@EventHandler(ignoreCancelled = true)
-	public void onDamageByEntity(EntityDamageByEntityEvent event) 
-	{
-		if (event.getEntity() instanceof Player) 
-		{
-			Player damager, damaged = (Player)event.getEntity();
-			if (event.getDamager() instanceof Player) 
-			{
-				damager = (Player)event.getDamager();
-			} 
-			else if (event.getDamager() instanceof Projectile) 
-			{
-				Projectile projectile = (Projectile)event.getDamager();
-				if (projectile.getShooter() instanceof Player) 
-				{
-					damager = (Player)projectile.getShooter();
-				} 
-				else 
-				{
-					return;
-				} 
-			} 
-			else 
-			{
-				return;
-			} 
+    @EventHandler
+    public void onEntityDamageByEntityEvent(EntityDamageByEntityEvent event) {
+        if (event.getEntity() instanceof Player) {
+            Player damaged = (Player) event.getEntity();
+            Player damager = null;
 
-			if (damager == damaged)
-				return; 
-			House damagedHouse = Profile.getByUUID(damaged.getUniqueId()).getHouse();
-			House damagerHouse = Profile.getByUUID(damager.getUniqueId()).getHouse();
+            if (event.getDamager() instanceof Player) {
+                damager = (Player) event.getDamager();
+            } else if (event.getDamager() instanceof Projectile) {
+                Projectile projectile = (Projectile) event.getDamager();
+                if (projectile.getShooter() instanceof Player) {
+                    damager = (Player) projectile.getShooter();
+                }
+            }
 
-			if (damagedHouse == null || damagerHouse == null)
-				return; 
+            if (damager == null || damager.equals(damaged)) return;
 
-			if (damagedHouse == damagerHouse) 
-			{
-				damager.sendMessage(MessageTool.color("&eYou cannot hurt &a%PLAYER%&e.").replace("%PLAYER%", damaged.getName()));
-				event.setCancelled(true);
-				return;
-			} 
+            House damagedHouse = Profile.getByUUID(damaged.getUniqueId()).getHouse();
+            House damagerHouse = Profile.getByUUID(damager.getUniqueId()).getHouse();
 
-			if (damagedHouse.getAllies().contains(damagerHouse) && !plugin.getMainConfig().getBoolean("ALLIES.DAMAGE_ALLIES")) 
-			{
-				damager.sendMessage(MessageTool.color("&eYou cannot hurt &a%PLAYER%&e.").replace("%PLAYER%", damaged.getName()));
-				event.setCancelled(true);
-			} 
-		} 
-	}
+            if (damagedHouse == null || damagerHouse == null) return;
+
+            if (damagedHouse == damagerHouse) {
+                damager.sendMessage(MessageTool.color("&eYou cannot hurt &a%PLAYER%&e.").replace("%PLAYER%", damaged.getName()));
+                event.setCancelled(true);
+                return;
+            }
+
+            if (damagedHouse.getAllies().contains(damagerHouse) && !plugin.getMainConfig().getBoolean("ALLIES.DAMAGE_ALLIES")) {
+                damager.sendMessage(MessageTool.color("&eYou cannot hurt &a%PLAYER%&e.").replace("%PLAYER%", damaged.getName()));
+                event.setCancelled(true);
+            }
+        }
+    }
 
 	@EventHandler
 	public void onPlayerMoveEvent(PlayerMoveEvent event) 
@@ -198,55 +176,45 @@ public class ProfileListeners implements Listener
 
 
 	@EventHandler(priority = EventPriority.HIGHEST)
-	public void onAsyncPlayerPreLoginEvent(AsyncPlayerPreLoginEvent event) 
-	{
-		if (event.getLoginResult() == AsyncPlayerPreLoginEvent.Result.ALLOWED) 
-		{
-			Profile profile = new Profile(event.getUniqueId());
-			if (profile.getName() == null || !profile.getName().equals(event.getName())) 
-			{
-				profile.setName(event.getName());
-				profile.save(options);
-			} 
-			ProfileDeathban deathban = profile.getDeathban();
-			if (profile.getDeathban() != null) 
-			{
-				event.setLoginResult(AsyncPlayerPreLoginEvent.Result.KICK_OTHER);
-				event.setKickMessage(ProfileDeathban.KICK_MESSAGE.replace("%TIME%", deathban.getTimeLeft()));
-				Profile.getProfiles().remove(profile);
-			} 
-		} 
+	public void onAsyncPlayerPreLoginEvent(AsyncPlayerPreLoginEvent event) {
+	    if (event.getLoginResult() == AsyncPlayerPreLoginEvent.Result.ALLOWED) {
+	        UUID playerUUID = event.getUniqueId();
+	        String playerName = event.getName();
+
+	        Profile profile = new Profile(playerUUID);
+	        if (profile.getName() == null || !profile.getName().equals(playerName)) {
+	            profile.setName(playerName);
+	            profile.save(options);
+	        }
+
+	        // Check deathban directly with the UUID
+	        if (ProfileDeathban.isDeathbanned(playerUUID)) {
+	            event.setLoginResult(AsyncPlayerPreLoginEvent.Result.KICK_OTHER);
+	            event.setKickMessage(ProfileDeathban.KICK_MESSAGE.replace("%TIME%", ProfileDeathban.getRemainingTime(playerUUID)));
+	        }
+	    }
 	}
+
 	
-	@SuppressWarnings("deprecation")
-	private void determineAdmin(Player player, long start)
-	{
-		if(player.hasPermission("kingdoms.admin"))
-		{
-			if(!Admin.getAdminProfiles().containsKey(player.getUniqueId()))
-			{
-				Admin.loadAdminProfile(player);
-				Admin admin = Admin.getByPlayer(player);
-				admin.setAdmin(true);
-
-				long end = System.currentTimeMillis();
-				player.sendMessage(MessageTool.color("&9Administrator profile for " + player.getName() + " was loaded successfully (" + (end - start) + "ms)."));	
-			}
-		}
-		else
-		{
-			if(!Profile.getActiveProfiles().containsKey(player.getUniqueId()))
-			{
-				Profile.loadProfile(player);
-
-				for(Admin admin : Admin.getAdminProfiles().values())
-				{
-					player.hidePlayer(admin.getPlayer());
-				}
-
-				long end = System.currentTimeMillis();
-				player.sendMessage(MessageTool.color("&9Profile " + player.getName() + " was loaded successfully (" + (end - start) + "ms)."));	
-			}
-		}
-	}
+    @SuppressWarnings("deprecation")
+	private void determineAdmin(Player player, long start) {
+        if (player.hasPermission("kingdoms.admin")) {
+            if (!Admin.getAdminProfiles().containsKey(player.getUniqueId())) {
+                Admin.loadAdminProfile(player);
+                Admin admin = Admin.getByPlayer(player);
+                admin.setAdmin(true);
+                long end = System.currentTimeMillis();
+                player.sendMessage(MessageTool.color("&9Administrator profile for " + player.getName() + " was loaded successfully (" + (end - start) + "ms)."));
+            }
+        } else {
+            if (!Profile.getActiveProfiles().containsKey(player.getUniqueId())) {
+                Profile.loadProfile(player);
+                for (Admin admin : Admin.getAdminProfiles().values()) {
+                    player.hidePlayer(admin.getPlayer());
+                }
+                long end = System.currentTimeMillis();
+                player.sendMessage(MessageTool.color("&9Profile " + player.getName() + " was loaded successfully (" + (end - start) + "ms)."));
+            }
+        }
+    }
 }

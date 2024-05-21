@@ -47,6 +47,7 @@ import lombok.Getter;
 /*
     This is in beta, not going to be making it configurable for quite some time.
  */
+@SuppressWarnings("deprecation")
 public class DeathLookup 
 {
 
@@ -120,13 +121,11 @@ public class DeathLookup
         return total;
     }
 
-    @SuppressWarnings("deprecation")
 	public long getDeathsCount() 
     {
         return plugin.getKingdomsDatabase().getFights().count(eq("killed", profile.getUuid().toString())) + profile.getFights().size();
     }
 
-    @SuppressWarnings("deprecation")
 	public List<ProfileFight> getDeaths(int page) 
     {
         List<ProfileFight> toReturn = new ArrayList<>();
